@@ -1,5 +1,8 @@
 # Log Message Format -  Manuel Morales
 
+> [!NOTE]
+> This project contains all the work I have done for the Log Message Format project in the Functional Programming in Programming V course. The project is part of the Functional Programming in Haskell.
+
 ## Introduction
 This project discusses the format of log messages, which consist of different types of log entries. Each log message starts with a character indicating its type, followed by additional information.
 
@@ -37,3 +40,36 @@ Defines the `whatWentWrong` function to extract relevant error messages with a s
 
 ## Testing
 You can test the `whatWentWrong` function with `testWhatWentWrong`, which is provided by the Log module. Provide `testWhatWentWrong` with your `parse` function, `whatWentWrong` function, and the name of the log file to parse.
+
+
+## Versions
+
+- **Cabal**:  3.0
+- **Stack**:  LTS 22.7
+- **GHC**:    9.6.4 
+
+## Instructions
+
+> [!NOTE]
+> You need to have installed the GHCUP tool to run this project.
+
+> [!IMPORTANT]
+>You need to build the project to run the code and the tests.
+
+To build this project you need to run the following command:
+
+```bash
+stack clean && stack build
+```
+
+To execute the Main of the project, you need to run the following command:
+
+```bash
+stack run
+```
+
+To run the tests of this project, you need to run the following command:
+
+```bash
+stack test
+```

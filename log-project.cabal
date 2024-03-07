@@ -1,4 +1,4 @@
-cabal-version:          2.2
+cabal-version:          3.0
 name:                   log-project
 version:                0.1.0.0
 description:            Please see the README on GitHub at <https://github.com/MorveN11/log-project#readme>
@@ -36,7 +36,9 @@ common executable-configuration
 
 library
     import:             configuration
-    exposed-modules:    Lib
+    exposed-modules:    LogParser
+                        Log
+                        Utilities
     hs-source-dirs:     src
 
 executable log-project-exe
@@ -51,3 +53,4 @@ test-suite log-project-test
     type:               exitcode-stdio-1.0
     main-is:            Spec.hs
     hs-source-dirs:     test
+    build-depends:      QuickCheck

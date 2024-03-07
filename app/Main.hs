@@ -1,6 +1,6 @@
 module Main (main) where
 
-import Lib
+import LogParser (parseMessage)
 
 main :: IO ()
-main = someFunc
+main = print (parseMessage "I 0 a")
