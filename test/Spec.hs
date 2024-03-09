@@ -1,42 +1,17 @@
-import Log (LogMessage (..), MessageType (..))
-import LogParser (parseMessage)
-import Test.QuickCheck (Property, Testable (property), quickCheck)
+import Log (LogMessage, MessageTree)
+import LogParser (build, inOrder, parseMessage, whatWentWrong)
 
-testInfoMessage :: Property
-testInfoMessage =
-  let message = "I 0 a"
-      expected = LogMessage Info 0 "a"
-   in property $ parseMessage message == expected
-
-testWarningMessage :: Property
-testWarningMessage =
-  let message = "W 0 a"
-      expected = LogMessage Warning 0 "a"
-   in property $ parseMessage message == expected
-
-testErrorMessage :: Property
-testErrorMessage =
-  let message = "E 2 0 a"
-      expected = LogMessage (Error 2) 0 "a"
-   in property $ parseMessage message == expected
-
-testUnknownMessage :: Property
-testUnknownMessage =
-  let message = "a"
-      expected = Unknown "a"
-   in property $ parseMessage message == expected
-
-testEmptyMessage :: Property
-testEmptyMessage =
-  let message = ""
-      expected = Unknown ""
-   in property $ parseMessage message == expected
+testWhatWentWrong ::
+  (String -> LogMessage) ->
+  ([LogMessage] -> MessageTree) ->
+  (MessageTree -> [LogMessage]) ->
+  ([LogMessage] -> [String]) ->
+  FilePath ->
+  IO [String]
+testWhatWentWrong parse builder getMessage checkWhatWentWrong file =
+  checkWhatWentWrong . getMessage . builder . map parse . lines <$> readFile file
 
 main :: IO ()
 main = do
-  quickCheck testInfoMessage
-  quickCheck testWarningMessage
-  quickCheck testErrorMessage
-  quickCheck testUnknownMessage
-  quickCheck testEmptyMessage
-  putStrLn "All tests passed!"
+  testWhatWentWrong parseMessage build inOrder whatWentWrong "docs/sample.log" >>= print
+  testWhatWentWrong parseMessage build inOrder whatWentWrong "docs/log_file.log" >>= print
